@@ -36,6 +36,11 @@ public class PurchaseRequestLineItemController extends BaseController {
 		return prliRepository.findAll();
 	}
 	
+	@GetMapping(path="/LinesForPR")
+	public @ResponseBody Iterable<PurchaseRequestLineItem> getAllLineItemsForPR(@RequestParam int id) {
+		return prliRepository.findAllByPurchaseRequestId(id);
+	}
+	
 	@GetMapping(path="/Get")
 	public @ResponseBody List<PurchaseRequestLineItem> getPurchaseRequestLineItem(@RequestParam int id) {
 		Optional<PurchaseRequestLineItem> prli = prliRepository.findById(id);

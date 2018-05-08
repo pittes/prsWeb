@@ -21,6 +21,8 @@ public class User {
 	private boolean reviewer;
 	@Column(name="isAdmin")
 	private boolean admin;
+	@Column(name="isActive")
+	private boolean active;
 	
 	public User() {
 		userName = "";
@@ -28,7 +30,7 @@ public class User {
 	}
 	
 	public User(int id, String userName, String password, String firstName, String lastName, String phoneNumber,
-			String email, boolean reviewer, boolean admin) {
+			String email, boolean reviewer, boolean admin, boolean active) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -39,10 +41,11 @@ public class User {
 		this.email = email;
 		this.reviewer = reviewer;
 		this.admin = admin;
+		this.active = active;
 	}
 	
 	public User(String userName, String password, String firstName, String lastName, String phoneNumber,
-			String email, boolean reviewer, boolean admin) {
+			String email, boolean reviewer, boolean admin, boolean active) {
 		setUserName(userName);
 		setPassword(password);
 		setFirstName(firstName);
@@ -51,6 +54,7 @@ public class User {
 		setEmail(email);
 		setReviewer(reviewer);
 		setAdmin(admin);
+		setActive(active);
 	}
 	
 	public int getId() {
@@ -108,11 +112,19 @@ public class User {
 		this.admin = admin;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", email=" + email + ", reviewer="
-				+ reviewer + ", admin=" + admin + "]";
+				+ reviewer + ", admin=" + admin + ", active=" + "]";
 	}
 	
 	
