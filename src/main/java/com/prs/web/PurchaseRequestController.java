@@ -117,7 +117,7 @@ public class PurchaseRequestController extends BaseController {
 	// When listing PR's for Review, show all except those belonging to logged-in User
 	@GetMapping(path="/ReviewRequests")
 	public @ResponseBody List<PurchaseRequest> getReviewRequests(@RequestParam int id) {
-		List<PurchaseRequest> pr = purchaseRequestRepository.findAllByUserIdNot(id);
+		List<PurchaseRequest> pr = purchaseRequestRepository.findAllByUserIdNotAndStatus(id, "Review");
 		return pr;
 	}
 }
