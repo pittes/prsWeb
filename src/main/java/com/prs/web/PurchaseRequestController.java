@@ -115,9 +115,36 @@ public class PurchaseRequestController extends BaseController {
 	}
 	
 	// When listing PR's for Review, show all except those belonging to logged-in User
-	@GetMapping(path="/ReviewRequests")
+	@GetMapping(path="/ListReview")
 	public @ResponseBody List<PurchaseRequest> getReviewRequests(@RequestParam int id) {
 		List<PurchaseRequest> pr = purchaseRequestRepository.findAllByUserIdNotAndStatus(id, "Review");
 		return pr;
 	}
+	
+	@PostMapping(path="/ApprovePR") 
+	public @ResponseBody PRSMaintenanceReturn approvePR (@RequestBody PurchaseRequest pr) {
+		pr.setStatus(PurchaseRequest.STATUS_APPROVED);
+		return savePR(pr);
+	}
+
+	@PostMapping(path="/RejectPR") 
+	public @ResponseBody PRSMaintenanceReturn rejectPR (@RequestBody PurchaseRequest pr) {
+		pr.setStatus(PurchaseRequest.STATUS_REJECTED);
+		return savePR(pr);
+	}
+
+	public @ResponseBody PRSMaintenanceReturn savePR (@RequestBody PurchaseRequest pr) {
+
+		try {
+			purchaseRequestRepository.save(pr);
+			return PRSMaintenanceReturn.getMaintReturn(pr);
+		}
+		catch (DataIntegrityViolationException dive) {
+			return PRSMaintenanceReturn.getMaintReturnError(pr, dive.getRootCause().toString());
+		}
+		catch (Exception e) {
+			return PRSMaintenanceReturn.getMaintReturnError(pr, e.toString());
+		}
+
+}
 }
